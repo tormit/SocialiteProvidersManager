@@ -171,6 +171,10 @@ abstract class AbstractProvider extends BaseProvider implements ProviderInterfac
             'allowed_classes' => [TemporaryCredentials::class],
         ]);
 
+        if (!($temp instanceof TemporaryCredentials)) {
+            throw new CredentialsException('Unable to get temporary credentials from session.');
+        }
+
         return $this->server->getTokenCredentials(
                 $temp, $this->request->get('oauth_token'), $this->request->get('oauth_verifier')
             );
